@@ -27,11 +27,13 @@ export class BookingCard extends HTMLElement {
     // А1: создайте открытый shadow root, поместите в него style и article.
     this.attachShadow({ mode: 'open' }).append(style, article)
     // А2: отобразите начальное состояние без данных.
+    this.render()
   }
 
   set booking(value: Booking) {
     // А2: примите данные и обновите отображение.
-    void value
+    this.current = value
+    this.render()
   }
 
   private render() {
@@ -46,6 +48,13 @@ export class BookingCard extends HTMLElement {
       return
     }
     // А2: имя, участники, источник, статус и кнопка для обоих состояний.
+    const confirmed = booking.status === 'confirmed'
+    this.nameText.textContent = booking.name
+    this.seatsText.textContent = `Участников: ${booking.seats}`
+    this.sourceText.textContent = `Источник: ${booking.source}`
+    this.statusText.textContent = confirmed ? 'Подтверждена' : 'Новая заявка'
+    this.button.textContent = confirmed ? 'Вернуть в очередь' : 'Подтвердить'
+    this.button.disabled = false
   }
 
   private onAction = () => {
