@@ -1,4 +1,4 @@
-import type { Booking } from '../models/booking'
+import type { Booking, BookingStatusRequest } from '../models/booking'
 
 // Заготовка компонента. Рабочие обычные карточки находятся в legacy-card.ts.
 export class BookingCard extends HTMLElement {
@@ -61,6 +61,11 @@ export class BookingCard extends HTMLElement {
     if (!this.current) return
     // А3: запросите следующий статус публичным событием.
     // Подтверждённая заявка тоже интерактивна: здесь нет запрета confirmed.
+    const { id, status } = this.current
+    this.dispatchEvent(new CustomEvent<BookingStatusRequest>('booking-status-request', {
+      detail: { id, nextStatus: status === 'new' ? 'confirmed' : 'new' },
+      bubbles: true,
+    }))
   }
 
   connectedCallback() {
