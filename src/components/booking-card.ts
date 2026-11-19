@@ -70,10 +70,12 @@ export class BookingCard extends HTMLElement {
 
   connectedCallback() {
     // А4: подключите обработчик внутренней кнопки.
+    this.button.addEventListener('click', this.onAction)
   }
 
   disconnectedCallback() {
     // А4: снимите этот же обработчик.
+    this.button.removeEventListener('click', this.onAction)
   }
 }
 
