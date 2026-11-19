@@ -2,6 +2,8 @@ import type { Booking, BookingStatusRequest } from '../models/booking'
 
 // Заготовка компонента. Рабочие обычные карточки находятся в legacy-card.ts.
 export class BookingCard extends HTMLElement {
+  static observedAttributes = ['compact']
+
   private current: Booking | null = null
   private nameText = document.createElement('h3')
   private seatsText = document.createElement('p')
@@ -37,6 +39,8 @@ export class BookingCard extends HTMLElement {
   }
 
   private render() {
+    const compact = this.hasAttribute('compact')
+    this.sourceText.hidden = compact
     const booking = this.current
     if (!booking) {
       this.nameText.textContent = 'Ожидаю данные'
@@ -50,11 +54,15 @@ export class BookingCard extends HTMLElement {
     // А2: имя, участники, источник, статус и кнопка для обоих состояний.
     const confirmed = booking.status === 'confirmed'
     this.nameText.textContent = booking.name
-    this.seatsText.textContent = `Участников: ${booking.seats}`
+    this.seatsText.textContent = compact ? `${booking.seats} чел.` : `Участников: ${booking.seats}`
     this.sourceText.textContent = `Источник: ${booking.source}`
     this.statusText.textContent = confirmed ? 'Подтверждена' : 'Новая заявка'
     this.button.textContent = confirmed ? 'Вернуть в очередь' : 'Подтвердить'
     this.button.disabled = false
+  }
+
+  attributeChangedCallback() {
+    this.render()
   }
 
   private onAction = () => {
