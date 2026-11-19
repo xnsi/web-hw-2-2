@@ -20,7 +20,7 @@ export class BookingCard extends HTMLElement {
       h3 { margin: 0 0 8px; overflow-wrap: anywhere; }
       p { margin: 6px 0; }
       slot { display: block; margin: 6px 0; }
-      button { background: #355bd4; color: white; border: 0; border-radius: 6px; padding: 9px 14px; font: inherit; cursor: pointer; }
+      button { background: var(--booking-accent, #355bd4); color: white; border: 0; border-radius: 6px; padding: 9px 14px; font: inherit; cursor: pointer; }
       button:disabled { background: #dfe6e3; color: #52665e; cursor: default; }
       button:focus-visible { outline: 3px solid #a15c00; outline-offset: 3px; }
     `
