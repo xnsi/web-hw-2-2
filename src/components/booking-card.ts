@@ -25,6 +25,7 @@ export class BookingCard extends HTMLElement {
     this.button.type = 'button'
     article.append(this.nameText, this.seatsText, this.sourceText, this.statusText, this.button)
     // А1: создайте открытый shadow root, поместите в него style и article.
+    this.attachShadow({ mode: 'open' }).append(style, article)
     // А2: отобразите начальное состояние без данных.
   }
 
@@ -63,4 +64,5 @@ export class BookingCard extends HTMLElement {
 }
 
 // А1: зарегистрируйте booking-card.
+customElements.define('booking-card', BookingCard)
 // Д1: реакция на compact. Д2: слот note. Д3: сохранение узлов и тема.
